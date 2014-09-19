@@ -25,12 +25,7 @@ h[1] = tonumber(string.sub(hash, 9 , 16), 16)
 h[2] = tonumber(string.sub(hash, 17, 24), 16)
 h[3] = tonumber(string.sub(hash, 25, 32), 16)
 
-local found = 1
 for i=1, k do
-  if redis.call('SETBIT', key, (h[i % 2] + i * h[2 + (((i + (i % 2)) % 4) / 2)]) % bits, 1) == 0 then
-    found = 0
-  end
+  redis.call('SETBIT', key, (h[i % 2] + i * h[2 + (((i + (i % 2)) % 4) / 2)]) % bits, 1)
 end
-
-return found
 
